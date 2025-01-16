@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-// CRUD Functions
+
 void adduser();
 void showusers();
 void changeuser();
@@ -35,7 +35,7 @@ int main() {
                 break;
             case 5:
                 printf("Exiting!\n");
-                return 0;  // Exit the program
+                return 0; 
             default:
                 printf("Invalid option. Try again.\n");
         }
@@ -43,7 +43,6 @@ int main() {
     return 0;
 }
 
-// Adding user to file
 void adduser() {
     FILE *file = fopen("users.txt", "a");
     if (file == NULL) {
@@ -56,7 +55,7 @@ void adduser() {
     printf("Enter ID: ");
     scanf("%d", &id);
     printf("Enter Name: ");
-    scanf(" %[^\n]s", name);  // Read the full name including spaces
+    scanf(" %[^\n]s", name); 
     printf("Enter Age: ");
     scanf("%d", &age);
     fprintf(file, "[id:%d, name:%s, age:%d]\n", id, name, age);
@@ -64,7 +63,6 @@ void adduser() {
     printf("User added!\n");
 }
 
-// Reading and showing all users from file
 void showusers() {
     FILE *file = fopen("users.txt", "r");
     if (file == NULL) {
@@ -76,15 +74,12 @@ void showusers() {
     while (fgets(line, sizeof(line), file)) {
         int id, age;
         char name[100];
-        // Parse the line to extract id, name, and age
         if (sscanf(line, "[id:%d, name:%99[^,], age:%d]", &id, name, &age) == 3) {
             printf("ID: %d, Name: %s, Age: %d\n", id, name, age);
         }
     }
     fclose(file);
 }
-
-// Updating a user detail in file
 void changeuser() {
     FILE *file = fopen("users.txt", "r");
     if (file == NULL) {
@@ -105,12 +100,11 @@ void changeuser() {
     while (fgets(line, sizeof(line), file)) {
         int tempid, tempage;
         char tempname[100];
-        // Parse the line to extract id, name, and age
         if (sscanf(line, "[id:%d, name:%99[^,], age:%d]", &tempid, tempname, &tempage) == 3) {
             if (tempid == id) {
                 found = 1;
                 printf("Enter new Name: ");
-                scanf(" %[^\n]s", newname);  // Read the full new name including spaces
+                scanf(" %[^\n]s", newname); 
                 printf("Enter new Age: ");
                 scanf("%d", &newage);
                 fprintf(tempfile, "[id:%d, name:%s, age:%d]\n", id, newname, newage);
@@ -131,7 +125,6 @@ void changeuser() {
     }
 }
 
-// Removing a user from file
 void removeuser() {
     FILE *file = fopen("users.txt", "r");
     if (file == NULL) {
@@ -152,7 +145,6 @@ void removeuser() {
         int tempid;
         char tempname[100];
         int tempage;
-        // Parse the line to extract id, name, and age
         if (sscanf(line, "[id:%d, name:%99[^,], age:%d]", &tempid, tempname, &tempage) == 3) {
             if (tempid != id) {
                 fprintf(tempfile, "%s", line);
